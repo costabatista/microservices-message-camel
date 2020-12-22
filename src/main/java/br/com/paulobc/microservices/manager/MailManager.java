@@ -38,11 +38,7 @@ public class MailManager implements Manager {
 
     }
 
-    @Override
-    public void setFromEndpoint() {
-        // TODO Auto-generated method stub
-
-    }
+   
 
     @Override
     public String getFromEndpoint() {
