@@ -4,9 +4,12 @@ import java.util.Properties;
 
 public class TelegramManager implements Manager {
     private Properties properties;
+    private String token;
+    private String fromEndpoint;
+    private String toEndpoint;
 
     public TelegramManager() {
-        this.loadProperties("telegram.properties");    
+        this.loadProperties("telegram.properties");
 
     }
 
@@ -24,43 +27,68 @@ public class TelegramManager implements Manager {
     public void loadProperties(String filePropertiesName) {
         SettingsLoader settingsLoader = new SettingsLoader();
         Properties properties = settingsLoader.getProperties(filePropertiesName);
+
         this.setProperties(properties);
+
+        String tokenProperty = properties.getProperty("token");
+        this.setToken(tokenProperty);
+        this.createFromEndpoint();
+        this.createToEndpoint();
+    }
+
+    private String getBaseEndpoint() {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("telegram:bots?authorizationToken=").append(this.getToken());
+        String base = builder.toString();
+
+        return base;
     }
 
     @Override
     public void createFromEndpoint() {
-        // TODO Auto-generated method stub
-
+        String base = this.getBaseEndpoint();
+        this.setFromEndpoint(base);
     }
 
     @Override
     public void createToEndpoint() {
-        // TODO Auto-generated method stub
+        String base = this.getBaseEndpoint();
+        StringBuilder builder = new StringBuilder();
+        builder.append(base).append("&chatId=${header.CamelTelegramId}");
+        String endpoint = builder.toString();
+        this.setToEndPoint(endpoint);
 
     }
 
     @Override
     public void setFromEndpoint(String fromEndpoint) {
-        // TODO Auto-generated method stub
+        this.fromEndpoint = fromEndpoint;
 
     }
 
     @Override
     public String getFromEndpoint() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.fromEndpoint;
     }
 
     @Override
     public String getToEndpoint() {
-        // TODO Auto-generated method stub
-        return null;
+        return this.toEndpoint;
     }
 
     @Override
     public void setToEndPoint(String toEnpoint) {
-        // TODO Auto-generated method stub
+        this.toEndpoint = toEnpoint;
 
     }
-    
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return this.token;
+    }
+
 }

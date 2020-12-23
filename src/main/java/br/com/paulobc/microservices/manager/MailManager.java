@@ -3,10 +3,56 @@ package br.com.paulobc.microservices.manager;
 import java.util.Properties;
 
 public class MailManager implements Manager {
+    private String username;
+    private String smtpAddress;
+    private String imapAddress;
+    private String port;
+    private boolean isSSL;
+
     private Properties properties;
 
     public MailManager() {
         this.loadProperties("mail.properties");
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setSmtpAddress(String smtpAddress) {
+        this.smtpAddress = smtpAddress;
+    }
+
+    public String getSmtpAddress() {
+        return this.smtpAddress;
+    }
+
+    public void setImapAddress(String imapAddress) {
+        this.imapAddress = imapAddress;
+    }
+
+    public String getImapAddress() {
+        return this.imapAddress;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getPort() {
+        return this.port;
+    }
+
+    public void setSSL(boolean ssl) {
+        this.isSSL = ssl;
+    }
+
+    public boolean getSSL() {
+        return this.isSSL;
     }
 
     @Override
@@ -37,8 +83,6 @@ public class MailManager implements Manager {
         // TODO Auto-generated method stub
 
     }
-
-   
 
     @Override
     public String getFromEndpoint() {
